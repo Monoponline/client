@@ -25,7 +25,7 @@ interface RenderPlayersCellProps extends Cell {
   players: Player[];
 }
 
-const getAvatar = (avatar: string) => {
+export const getAvatar = (avatar: string) => {
   switch (avatar) {
     case 'battleship':
       return battleship;

@@ -13,11 +13,11 @@ import Waterworks from "./cells/WaterWorks";
 import GoToJail from "./cells/GoToJail";
 import LuxuryTax from "./cells/LuxuryTax";
 
-const Board: FC = (props) => {
+const Board: FC<BoardProps> = (props) => {
   return (
     <div className="table">
       <div className="board">
-        <Center />
+        <Center username={props.username} />
         <Go cell={0} />
 
         <div className="row horizontal-row bottom-row">
@@ -76,6 +76,10 @@ const Board: FC = (props) => {
       </div>
     </div>
   );
+}
+
+interface BoardProps {
+  username: string;
 }
 
 export default Board;
