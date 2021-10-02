@@ -13,6 +13,9 @@ const rootReducer = (state = initState, action: any) => {
   if (action.type === Actions.UPDATE_STATE) {
     state = action.gameState;
   }
+  if (action.type === Actions.RESET_STATE) {
+    state = initState;
+  }
   return state;
 }
 
