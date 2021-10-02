@@ -18,7 +18,7 @@ const RenderHouses: FC<RenderHousesCellProps> = (props) => {
     <div className="houses">
       {h.houses === 5 ? (
         <img src={hotel} alt="Hotel" style={{ width: '15px' }} />
-      ) : houses.map(() => <img src={house} alt="House" style={{ width: '12px' }} />)}
+      ) : houses.map((ignored, index) => <img key={index} src={house} alt="House" style={{ width: '12px' }} />)}
     </div>
   );
 };

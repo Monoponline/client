@@ -12,11 +12,11 @@ import thimble from './../images/thimble.png';
 import wheelbarrow from './../images/wheelbarrow.png';
 
 const RenderPlayers: FC<RenderPlayersCellProps> = (props) => {
-  const players = props.players.filter(player => player.cell === props.cell);
+  const players = props.players.filter(player => player.position === props.cell);
 
   return (
     <div className="players">
-      {players.map(player => <img src={getAvatar(player.avatar)} alt={player.name} />)}
+      {players.map((player, index) => <img key={index} src={getAvatar(player.avatar)} alt={player.name} />)}
     </div>
   );
 };
