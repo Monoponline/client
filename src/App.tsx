@@ -1,11 +1,14 @@
 import { ChangeEvent, Component, MouseEvent } from "react";
+import { connect } from 'react-redux';
 import { toast, ToastContainer } from "react-toastify";
 import { io, Socket } from "socket.io-client";
 import { DefaultEventsMap } from "socket.io-client/build/typed-events";
 import Game from "./components/Game";
 import SocketContext from "./contexts/SocketContext";
+import Actions from './reducers/Actions';
+import { State } from './reducers/rootReducer';
 
-class App extends Component {
+class App extends Component<AppProps> {
   state = {
     loggedIn: false,
     name: '',
@@ -37,6 +40,22 @@ class App extends Component {
     });
     this.setState({
       loggedIn: true
+    });
+    this.state.socket.on('win', () => {
+      this.setState({
+        gameId: '',
+        isInGame: false
+      });
+      toast.success(<h3 style={{ fontSize: '0.9rem' }}>You win!</h3>);
+      this.props.resetState();
+    });
+    this.state.socket.once('joined-game', (id: string, spectator?: boolean) => {
+      toast.success(<h3 style={{ fontSize: '0.9rem' }}>Joined game {id}{spectator ? ' as a spectator' : ''}!</h3>);
+    });
+    this.state.socket.on('game-state', (json: string) => {
+      const gameState: State = JSON.parse(json);
+      console.log(gameState);
+      this.props.updateState(gameState);
     });
   }
 
@@ -99,4 +118,24 @@ class App extends Component {
   }
 }
 
-export default App;
+interface AppProps {
+  updateState: (gameState: State) => void;
+  resetState: () => void;
+}
+
+const mapStateToProps = (state: State) => {
+  return {}
+}
+
+const mapDispatchToProps = (dispatch: any) => {
+  return {
+    updateState: (gameState: State) => {
+      dispatch({ type: Actions.UPDATE_STATE, gameState });
+    },
+    resetState: () => {
+      dispatch({ type: Actions.RESET_STATE });
+    }
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

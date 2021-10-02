@@ -1,27 +1,17 @@
 import { FC, useContext } from "react";
 import { connect } from "react-redux";
-import { toast } from "react-toastify";
 import SocketContext from "../contexts/SocketContext";
-import Actions from "../reducers/Actions";
 import { Player, State } from "../reducers/rootReducer";
 import Board from "./Board";
 
 const Game: FC<GameProps> = (props) => {
   const socket = useContext(SocketContext);
-  socket.once('joined-game', (id: string, spectator?: boolean) => {
-    toast.success(<h3 style={{ fontSize: '0.9rem' }}>Joined game {id}{spectator ? ' as a spectator' : ''}!</h3>);
-  });
-  socket.on('game-state', (json: string) => {
-    const gameState: State = JSON.parse(json);
-    console.log(gameState);
-    props.updateState(gameState);
-  });
 
   return (
     <div className="Game">
       {props.started ? (
         <>
-          <Board />
+          <Board username={props.username} />
         </>
       ) : (
         <>
@@ -50,7 +40,6 @@ interface GameProps {
   username: string;
   started: boolean;
   players: Player[];
-  updateState: (gameState: State) => void;
 }
 
 const mapStateToProps = (state: State) => {
@@ -60,12 +49,4 @@ const mapStateToProps = (state: State) => {
   }
 }
 
-const mapDispatchToProps = (dispatch: any) => {
-  return {
-    updateState: (gameState: State) => {
-      dispatch({ type: Actions.UPDATE_STATE, gameState });
-    }
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Game);
+export default connect(mapStateToProps)(Game);
