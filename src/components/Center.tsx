@@ -1,11 +1,13 @@
-import { FC } from 'react';
+import { FC, useContext } from 'react';
 import { connect } from 'react-redux';
+import SocketContext from '../contexts/SocketContext';
 import { State } from '../reducers/rootReducer';
 import chance from './../images/chance.png';
 import communitychest from './../images/communitychest.png';
 import { getAvatar } from './RenderPlayers';
 
 const Center: FC<CenterProps> = (props) => {
+  const socket = useContext(SocketContext);
   // const [view, setView] = useState(0);
   
   // useEffect(() => {
@@ -37,41 +39,41 @@ const Center: FC<CenterProps> = (props) => {
       </div> */}
       {props.isPlayerTurn ? (        
         <>
-          <div style={{ display: 'flex', position: 'fixed', marginBottom: '20rem', marginLeft: '15rem' }}>
-            <h3 style={{ fontSize: '1rem' }}>C'est votre tour!</h3>
+          <div style={{ display: 'flex', position: 'fixed', marginBottom: '45rem', marginLeft: '27rem' }}>
+            <h3 style={{ fontSize: '3rem' }}>C'est votre tour!</h3>
           </div>
-          <div style={{ display: 'flex', position: 'fixed', marginBottom: '15rem', marginLeft: '15rem' }}>
-            <button style={{ fontSize: '1rem' }}>Lancer les dés</button>
+          <div style={{ display: 'flex', position: 'fixed', marginBottom: '32rem', marginLeft: '27rem' }}>
+            <button style={{ fontSize: '3rem' }} onClick={() => socket.emit('roll-dice')}>Lancer les dés</button>
           </div>
         </>
       ) : <></>}
       {props.isPlayer ? (
         <>
-          <div style={{ display: 'flex', position: 'fixed', marginTop: '15rem', marginRight: '22rem' }}>
-            <h3 style={{ fontSize: '1rem' }}>Compte:</h3>
+          <div style={{ display: 'flex', position: 'fixed', marginTop: '30rem', marginRight: '45rem' }}>
+            <h3 style={{ fontSize: '3rem' }}>Compte:</h3>
           </div>
-          <div style={{ display: 'flex', position: 'fixed', marginTop: '21rem', marginRight: '22rem' }}>
-            <h2 style={{ fontSize: '1.3rem' }}>{props.account}€</h2>
+          <div style={{ display: 'flex', position: 'fixed', marginTop: '42rem', marginRight: '45rem' }}>
+            <h2 style={{ fontSize: '4rem' }}>{props.account}€</h2>
           </div>
-          <div style={{ display: 'flex', position: 'fixed', marginTop: '15rem', marginRight: '8rem' }}>
-            <h2 style={{ fontSize: '1rem' }}>Pion:</h2>
+          <div style={{ display: 'flex', position: 'fixed', marginTop: '30rem', marginRight: '6rem' }}>
+            <h2 style={{ fontSize: '3rem' }}>Pion:</h2>
           </div>
-          <div style={{ display: 'flex', position: 'fixed', marginTop: '18rem', marginRight: '12rem' }}>
-            <img style={{ position: 'fixed', marginLeft: '5px', width: '4rem' }} src={getAvatar(props.avatar as string)} alt={props.avatar} />
+          <div style={{ display: 'flex', position: 'fixed', marginTop: '37rem', marginRight: '14rem' }}>
+            <img style={{ position: 'fixed', width: '7rem' }} src={getAvatar(props.avatar as string)} alt={props.avatar} />
           </div>
         </>
       ) : <></>}
       <div className="community-chest-deck">
         <h2 className="label">Caisse de communauté</h2>
         <div className="deck">
-          <img src={communitychest} height="77px" width="104px" alt="Caisse de communauté" />
+          <img src={communitychest} className="deck-card" alt="Caisse de communauté" />
         </div>
       </div>
-      <h1 className="title">MONOPOLY</h1>
+      <h1 className="title">MONOPONLINE</h1>
       <div className="chance-deck">
         <h2 className="label">Chance</h2>
         <div className="deck">
-          <img src={chance} height="77px" width="104px" alt="Chance" />
+          <img src={chance} className="deck-card" alt="Chance" />
         </div>
       </div>
     </div>

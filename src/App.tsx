@@ -26,10 +26,10 @@ class App extends Component<AppProps> {
 
   handleLoginClick = async (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    if (this.state.name === '') return toast.error(<h3 style={{ fontSize: '0.9rem' }}>Invalid username!</h3>);
+    if (this.state.name === '') return toast.error(<h3 style={{ fontSize: '2rem' }}>Invalid username!</h3>);
     const isTaken = await this.usernameTaken();
     if (isTaken) {
-      toast.error(<h3 style={{ fontSize: '0.9rem' }}>Username already taken!</h3>);
+      toast.error(<h3 style={{ fontSize: '2rem' }}>Username already taken!</h3>);
       return;
     }
     this.state.socket = io('ws://localhost:8080', {
@@ -46,11 +46,11 @@ class App extends Component<AppProps> {
         gameId: '',
         isInGame: false
       });
-      toast.success(<h3 style={{ fontSize: '0.9rem' }}>You win!</h3>);
+      toast.success(<h3 style={{ fontSize: '2rem' }}>You win!</h3>);
       this.props.resetState();
     });
     this.state.socket.once('joined-game', (id: string, spectator?: boolean) => {
-      toast.success(<h3 style={{ fontSize: '0.9rem' }}>Joined game {id}{spectator ? ' as a spectator' : ''}!</h3>);
+      toast.success(<h3 style={{ fontSize: '2rem' }}>Joined game {id}{spectator ? ' as a spectator' : ''}!</h3>);
     });
     this.state.socket.on('game-state', (json: string) => {
       const gameState: State = JSON.parse(json);
@@ -60,7 +60,7 @@ class App extends Component<AppProps> {
   }
 
   componentWillUnmount() {
-    this.state.socket.close();
+    this.state.socket?.close();
   }
 
   usernameTaken = async () => {
@@ -97,20 +97,20 @@ class App extends Component<AppProps> {
       this.state.loggedIn ? (
         <>
           <ToastContainer position="top-right" />
-          <h1 style={{ display: "flex", alignItems: 'flex-end', justifyContent: 'center', marginTop: '20%', fontSize: '5rem' }}>Monoponline</h1>
-          <h4 style={{ display: "flex", alignItems: 'flex-end', justifyContent: 'center', fontSize: '2rem' }}>Logged in as {this.state.name}</h4>
+          <h1 style={{ display: "flex", alignItems: 'flex-end', justifyContent: 'center', marginTop: '20%', fontSize: '15rem' }}>Monoponline</h1>
+          <h4 style={{ display: "flex", alignItems: 'flex-end', justifyContent: 'center', fontSize: '6rem' }}>Logged in as {this.state.name}</h4>
           <form style={{ display: "flex", alignItems: 'flex-end', justifyContent: 'center' }}>
-            <input placeholder="Game ID" value={this.state.gameId} type="text" onChange={this.handleJoinGameChange} style={{ width: '10rem', height: '2rem', fontSize: '1rem' }} />
-            <button onClick={this.handleJoinGameClick} style={{ width: '6rem', height: '2rem', fontSize: '1rem' }}>Join game</button>
+            <input placeholder="Game ID" value={this.state.gameId} type="text" onChange={this.handleJoinGameChange} style={{ width: '25rem', height: '6rem', fontSize: '3rem' }} />
+            <button onClick={this.handleJoinGameClick} style={{ width: '16rem', height: '6rem', fontSize: '3rem' }}>Join game</button>
           </form>
         </>
       ) : (
         <>
           <ToastContainer position="top-right" />
-          <h1 style={{ display: "flex", alignItems: 'flex-end', justifyContent: 'center', marginTop: '22%', fontSize: '5rem' }}>Monoponline</h1>
+          <h1 style={{ display: "flex", alignItems: 'flex-end', justifyContent: 'center', marginTop: '22%', fontSize: '15rem' }}>Monoponline</h1>
           <form style={{ display: "flex", alignItems: 'flex-end', justifyContent: 'center' }}>
-            <input placeholder="Username" value={this.state.name} type="text" onChange={this.handleNameChange} style={{ width: '10rem', height: '2rem', fontSize: '1rem' }} />
-            <button onClick={this.handleLoginClick} style={{ width: '5rem', height: '2rem', fontSize: '1rem' }}>Login</button>
+            <input placeholder="Username" value={this.state.name} type="text" onChange={this.handleNameChange} style={{ width: '25rem', height: '6rem', fontSize: '3rem' }} />
+            <button onClick={this.handleLoginClick} style={{ width: '10rem', height: '6rem', fontSize: '3rem' }}>Login</button>
           </form>
         </>
       )
