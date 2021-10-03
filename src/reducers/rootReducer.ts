@@ -9,12 +9,14 @@ const initState: State = {
   started: false
 }
 
-const rootReducer = (state = initState, action: any) => {
-  if (action.type === Actions.UPDATE_STATE) {
-    state = action.gameState;
-  }
-  if (action.type === Actions.RESET_STATE) {
-    state = initState;
+const rootReducer = (state = initState, action: { type: Actions, gameState?: State }) => {
+  switch (action.type) {
+    case Actions.UPDATE_STATE:
+      state = action.gameState!;      
+      break;
+    case Actions.RESET_STATE:
+      state = initState;
+      break;
   }
   return state;
 }
