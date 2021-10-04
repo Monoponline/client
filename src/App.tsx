@@ -26,10 +26,10 @@ class App extends Component<AppProps> {
 
   handleLoginClick = async (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    if (this.state.name === '') return toast.error(<h3 style={{ fontSize: '2rem' }}>Invalid username!</h3>);
+    if (this.state.name === '') return toast.error(<h3 className="popup">Invalid username!</h3>);
     const isTaken = await this.usernameTaken();
     if (isTaken) {
-      toast.error(<h3 style={{ fontSize: '2rem' }}>Username already taken!</h3>);
+      toast.error(<h3 className="popup">Username already taken!</h3>);
       return;
     }
     this.state.socket = io('ws://localhost:8080', {
@@ -46,16 +46,21 @@ class App extends Component<AppProps> {
         gameId: '',
         isInGame: false
       });
-      toast.success(<h3 style={{ fontSize: '2rem' }}>You win!</h3>);
+      toast.success(<h3 className="popup">You win!</h3>);
       this.props.resetState();
     });
-    this.state.socket.once('joined-game', (id: string, spectator?: boolean) => {
-      toast.success(<h3 style={{ fontSize: '2rem' }}>Joined game {id}{spectator ? ' as a spectator' : ''}!</h3>);
+    this.state.socket.on('joined-game', (id: string, spectator?: boolean) => {
+      toast.success(<h3 className="popup">Joined game {id}{spectator ? ' as a spectator' : ''}!</h3>);
+    });
+    this.state.socket.on('left-game', (player) => {
+      toast.info(<h3 className="popup">{player === this.state.name ? 'You' : player} left the game</h3>);
     });
     this.state.socket.on('game-state', (json: string) => {
       const gameState: State = JSON.parse(json);
-      console.log(gameState);
       this.props.updateState(gameState);
+    });
+    this.state.socket.on('dice-roll', (player, dices) => {
+      toast.info(<h3 className="popup">{player === this.state.name ? 'You' : player} rolled {dices[0]} and {dices[1]}!</h3>);
     });
   }
 

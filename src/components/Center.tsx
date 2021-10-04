@@ -8,35 +8,9 @@ import { getAvatar } from './RenderPlayers';
 
 const Center: FC<CenterProps> = (props) => {
   const socket = useContext(SocketContext);
-  // const [view, setView] = useState(0);
-  
-  // useEffect(() => {
-  //   switch (view) {
-  //     case 1:
-  //       document.querySelector<HTMLDivElement>('.board')!.style.transform = 'rotate(0deg)';
-  //       break;
-  //     case 2:
-  //       document.querySelector<HTMLDivElement>('.board')!.style.transform = 'rotate(90deg)';
-  //       break;
-  //     case 3:
-  //       document.querySelector<HTMLDivElement>('.board')!.style.transform = 'rotate(180deg)';
-  //       break;
-  //     case 4:
-  //       document.querySelector<HTMLDivElement>('.board')!.style.transform = 'rotate(270deg)';
-  //       break;
-  //   }
-  // }, [view]);
-
-  // const handleSwitchView = () => {
-  //   let views = [1, 2, 3, 4];
-  //   setView(views[views.indexOf(view) + 1] ?? views[0]);
-  // };
 
   return (
     <div className="center">
-      {/* <div style={{ display: 'flex', position: 'fixed', marginBottom: '20rem', marginLeft: '15rem' }}>
-        <button style={{ fontSize: '1rem' }} onClick={handleSwitchView}>Switch View</button>
-      </div> */}
       {props.isPlayerTurn ? (        
         <>
           <div style={{ display: 'flex', position: 'fixed', marginBottom: '45rem', marginLeft: '27rem' }}>
