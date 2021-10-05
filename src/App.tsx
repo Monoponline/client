@@ -26,10 +26,10 @@ class App extends Component<AppProps> {
 
   handleLoginClick = async (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    if (this.state.name === '') return toast.error(<h3 className="popup">Invalid username!</h3>);
+    if (this.state.name === '') return toast.error(<h3 className="popup">Pseudo Invalide!</h3>);
     const isTaken = await this.usernameTaken();
     if (isTaken) {
-      toast.error(<h3 className="popup">Username already taken!</h3>);
+      toast.error(<h3 className="popup">Pseudo déjà pris!</h3>);
       return;
     }
     this.state.socket = io('ws://localhost:8080', {
@@ -46,21 +46,39 @@ class App extends Component<AppProps> {
         gameId: '',
         isInGame: false
       });
-      toast.success(<h3 className="popup">You win!</h3>);
+      toast.success(<h3 className="popup">Vous avez gagné!</h3>);
       this.props.resetState();
     });
     this.state.socket.on('joined-game', (id: string, spectator?: boolean) => {
-      toast.success(<h3 className="popup">Joined game {id}{spectator ? ' as a spectator' : ''}!</h3>);
+      toast.success(<h3 className="popup">Vous avez rejoint la partie {id}{spectator ? ' (spectateur)' : ''}!</h3>);
     });
     this.state.socket.on('left-game', (player) => {
-      toast.info(<h3 className="popup">{player === this.state.name ? 'You' : player} left the game</h3>);
+      toast.info(<h3 className="popup">{player} a quitté la partie</h3>);
     });
     this.state.socket.on('game-state', (json: string) => {
       const gameState: State = JSON.parse(json);
       this.props.updateState(gameState);
     });
     this.state.socket.on('dice-roll', (player, dices) => {
-      toast.info(<h3 className="popup">{player === this.state.name ? 'You' : player} rolled {dices[0]} and {dices[1]}!</h3>);
+      toast.info(<h3 className="popup">{player === this.state.name ? 'Vous avez' : `${player} a`} fait {dices[0]} et {dices[1]}!</h3>);
+    });
+    this.state.socket.on('buy-house', (player, cell) => {
+      toast.info(<h3 className="popup">{player === this.state.name ? 'Vous venez ' : `${player} vient`} d'acheter {cell}!</h3>);
+    });
+    this.state.socket.on('cant-afford', (player, cell) => {
+      toast.info(<h3 className="popup">{player === this.state.name ? 'Vous ne pouvez pas ' : `${player} ne peut pas`} acheter {cell}</h3>);
+    });
+    this.state.socket.on('paid-rent', (player, renter, rent) => {
+      toast.info(<h3 className="popup">{player === this.state.name ? 'Vous avez ' : `${player} a `} payer {rent} à {renter}</h3>);
+    });
+    this.state.socket.on('info', (message) => {
+      toast.info(<h3 className="popup">{message}</h3>);
+    });
+    this.state.socket.on('warn', (message) => {
+      toast.info(<h3 className="popup">{message}</h3>);
+    });
+    this.state.socket.on('success', (message) => {
+      toast.info(<h3 className="popup">{message}</h3>);
     });
   }
 
