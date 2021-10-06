@@ -52,38 +52,77 @@ class App extends Component<AppProps> {
     this.state.socket.on('joined-game', (id: string, spectator?: boolean) => {
       toast.success(<h3 className="popup">Vous avez rejoint la partie {id}{spectator ? ' (spectateur)' : ''}!</h3>);
     });
-    this.state.socket.on('left-game', (player) => {
+    this.state.socket.on('left-game', (player: string) => {
       toast.info(<h3 className="popup">{player} a quitté la partie</h3>);
     });
     this.state.socket.on('game-state', (json: string) => {
       const gameState: State = JSON.parse(json);
       this.props.updateState(gameState);
     });
-    this.state.socket.on('dice-roll', (player, dices) => {
+    this.state.socket.on('dice-roll', (player: string, dices: number[]) => {
       toast.info(<h3 className="popup">{player === this.state.name ? 'Vous avez' : `${player} a`} fait {dices[0]} et {dices[1]}!</h3>);
     });
-    this.state.socket.on('buy-house', (player, cell) => {
-      toast.info(<h3 className="popup">{player === this.state.name ? 'Vous venez ' : `${player} vient`} d'acheter {cell}!</h3>);
+    this.state.socket.on('buy-house', (player: string, cell: string) => {
+      toast.success(<h3 className="popup">{player === this.state.name ? 'Vous venez' : `${player} vient`} d'acheter {cell}!</h3>);
     });
-    this.state.socket.on('cant-afford', (player, cell) => {
-      toast.info(<h3 className="popup">{player === this.state.name ? 'Vous ne pouvez pas ' : `${player} ne peut pas`} acheter {cell}</h3>);
+    this.state.socket.on('cant-afford', (player: string, cell: string) => {
+      toast.error(<h3 className="popup">{player === this.state.name ? 'Vous ne pouvez pas' : `${player} ne peut pas`} acheter {cell}</h3>);
     });
-    this.state.socket.on('paid-rent', (player, renter, rent) => {
-      toast.info(<h3 className="popup">{player === this.state.name ? 'Vous avez ' : `${player} a `} payer {rent} à {renter}</h3>);
+    this.state.socket.on('paid-rent', (player: string, renter: string, rent: number) => {
+      toast.info(<h3 className="popup">{player === this.state.name ? 'Vous avez' : `${player} a`} payer {rent}€ à {renter === this.state.name ? 'vous' : renter}</h3>);
     });
-    this.state.socket.on('info', (message) => {
+    this.state.socket.on('player-in-jail', (player: string) => {
+      toast.info(<h3 className="popup-sm">{player === this.state.name ? 'Vous avez été envoyer en prison, vous n\'en sortirez que dans 3 tours. A moins que vous ne payez 50€ ou que vous avez une carte Sortir de Prison.' : `${player} est en Prison!`}</h3>);
+    });
+    this.state.socket.on('paid-luxury-taxe', (player: string) => {
+      toast.info(<h3 className="popup">{player === this.state.name ? 'Vous avez' : `${player} a`} payer 100€ pour la taxe de luxe.</h3>);
+    });
+    this.state.socket.on('paid-taxes', (player: string) => {
+      toast.info(<h3 className="popup">{player === this.state.name ? 'Vous avez' : `${player} a`} payer 200€ d'impôts.</h3>);
+    });
+    this.state.socket.on('chance-card', (card: string) => {
+      toast.info(<h3 className="popup-sm">Vous avez une carte chance, {card}</h3>);
+    });
+    this.state.socket.on('cc-card', (card: string) => {
+      toast.info(<h3 className="popup-sm">Vous avez une carte caisse de communauté, {card}</h3>);
+    });
+    this.state.socket.on('player-move', (player: string, cell: string) => {
+      toast.info(<h3 className="popup">{player === this.state.name ? 'Vous devez vous' : `${player} dois se`} rendre à {cell}</h3>);
+    });
+    this.state.socket.on('fine', (player: string, price: number) => {
+      toast.info(<h3 className="popup">{player === this.state.name ? 'Vous devez' : `${player} dois`} payer une amende de {price}€</h3>);
+    });
+    this.state.socket.on('earn', (player: string, price: string | number) => {
+      toast.success(<h3 className="popup">{player === this.state.name ? 'Vous avez' : `${player} a`} gagner {typeof price === 'number' ? `${price}€` : price}!</h3>);
+    });
+    this.state.socket.on('player-broke', (player: string) => {
+      toast.error(<h3 className="popup">{player === this.state.name ? 'Vous êtes' : `${player} est`} ruiné!</h3>);
+    });
+    this.state.socket.on('exit-jail', (player: string) => {
+      toast.success(<h3 className="popup">{player === this.state.name ? 'Vous sortez' : `${player} sort`} de prison!</h3>);
+    });
+    this.state.socket.on('is-in-jail', (player: string) => {
+      toast.error(<h3 className="popup">{player === this.state.name ? 'Vous êtes' : `${player} est`} en prison!</h3>);
+    });
+    this.state.socket.on('used-exit-jail-card', (player: string) => {
+      toast.error(<h3 className="popup">{player === this.state.name ? 'Vous avez' : `${player} a`} utilisé une carte sortie de prison!</h3>);
+    });
+    this.state.socket.on('friend-gift', (player: string) => {
+      toast.error(<h3 className="popup">{player === this.state.name ? 'Vous avez reçu 10€ de la part de chaque joueur!' : `Vous avez donné 10€ à ${player}`}</h3>);
+    });
+    this.state.socket.on('info', (message: string) => {
       toast.info(<h3 className="popup">{message}</h3>);
     });
-    this.state.socket.on('warn', (message) => {
-      toast.info(<h3 className="popup">{message}</h3>);
+    this.state.socket.on('warn', (message: string) => {
+      toast.warn(<h3 className="popup">{message}</h3>);
     });
-    this.state.socket.on('success', (message) => {
-      toast.info(<h3 className="popup">{message}</h3>);
+    this.state.socket.on('success', (message: string) => {
+      toast.success(<h3 className="popup">{message}</h3>);
     });
   }
 
   componentWillUnmount() {
-    this.state.socket?.close();
+    this.state.socket?.disconnect();
   }
 
   usernameTaken = async () => {
