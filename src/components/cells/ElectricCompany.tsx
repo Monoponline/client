@@ -9,7 +9,7 @@ const ElectricCompany: FC<Cell> = (props) => {
         <div className="name">Compagnie de distribution d'électricité</div>
         <RenderPlayers cell={props.cell} />
         <i className="drawing fa fa-lightbulb-o"></i>
-        <div className="price">$150</div>
+        <div className="price">150€</div>
       </div>
     </div>
   );

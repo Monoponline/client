@@ -11,7 +11,7 @@ const Property: FC<PropertyProps> = (props) => {
         <div className={`name${props.three ? ' three-line-name' : ''}`}>{props.name}</div>
         <RenderPlayers cell={props.cell} />
         <RenderHouses cell={props.cell} />
-        <div className="price">${props.price}</div>
+        <div className="price">{props.price}€</div>
       </div>
     </div>
   );

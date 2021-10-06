@@ -9,7 +9,7 @@ const LuxuryTax: FC<Cell> = (props) => {
         <div className="name">Taxe de luxe</div>
         <RenderPlayers cell={props.cell} />
         <div className="drawing fa fa-diamond"></div>
-        <div className="instructions">$100</div>
+        <div className="instructions">100€</div>
       </div>
     </div>
   );
