@@ -1,23 +1,112 @@
-import { FC, useContext } from 'react';
+import { FC, useContext, useRef } from 'react';
+import { confirmAlert } from 'react-confirm-alert';
+import Select from 'react-dropdown-select';
 import { connect } from 'react-redux';
+import Board from '../Board';
 import SocketContext from '../contexts/SocketContext';
-import { State } from '../reducers/rootReducer';
+import { Player, State } from '../reducers/rootReducer';
 import chance from './../images/chance.png';
 import communitychest from './../images/communitychest.png';
 import { getAvatar } from './RenderPlayers';
 
 const Center: FC<CenterProps> = (props) => {
   const socket = useContext(SocketContext);
+  const values1 = useRef([] as { label: string; value: any }[]);
+  const values2 = useRef([] as { label: string; value: any }[]);
+  
+  const moneyToGive = useRef(0);
+  const moneyToReceive = useRef(0);
 
   return (
     <div className="center">
       {props.isPlayerTurn ? (        
         <>
-          <div style={{ display: 'flex', position: 'fixed', marginBottom: '45rem', marginLeft: '27rem' }}>
+          <div style={{ display: 'flex', position: 'fixed', marginBottom: '55rem', marginLeft: '27rem' }}>
             <h3 style={{ fontSize: '3rem' }}>C'est votre tour!</h3>
           </div>
-          <div style={{ display: 'flex', position: 'fixed', marginBottom: '32rem', marginLeft: '27rem' }}>
+          <div style={{ display: 'flex', position: 'fixed', marginBottom: '37rem', marginLeft: '27rem' }}>
             <button style={{ fontSize: '3rem' }} onClick={() => socket.emit('roll-dice')}>Lancer les dés</button>
+          </div>
+          <div style={{ display: 'flex', position: 'fixed', marginBottom: '20rem', marginLeft: '27rem' }}>
+            <button style={{ fontSize: '3rem' }} onClick={() => {
+              confirmAlert({
+                title: 'Faire un échange avec:',
+                buttons: props.players!.filter((player) => player.name !== props.username).map((player) => {
+                  return {
+                    label: player.name,
+                    onClick: () => {
+                      setTimeout(() => {
+                        confirmAlert({
+                          title: `Echange avec ${player.name}`,
+                          message: 'Echanger',
+                          childrenElement: () => {
+                            values1.current = [];
+                            values2.current = [];
+
+                            let options1 = [] as { label: string, value: any }[];
+                            let temp = props.players!.find((player) => player.name === props.username)!;
+                            temp.properties.forEach((j) => {
+                              options1.push({
+                                label: Board.find((cell) => cell.position === j)!.name,
+                                value: j
+                              });
+                            });
+                            let options2 = [] as { label: string, value: any }[];
+                            player.properties.forEach((j) => {
+                              options2.push({
+                                label: Board.find((cell) => cell.position === j)!.name,
+                                value: j
+                              });
+                            });
+          
+                            return (
+                              <>{' '}
+                                <input
+                                  type="number"
+                                  placeholder="Argent supplémentaire"
+                                  defaultValue={0}
+                                  onChange={(e) => (moneyToGive.current = parseInt(e.target.value))} />€
+                                <Select
+                                  multi={true}
+                                  searchable={true}
+                                  values={values1.current}
+                                  onChange={(v) => (values1.current = v)}
+                                  options={options1} />
+                                contre <input
+                                        type="number"
+                                        placeholder="Argent supplémentaire"
+                                        defaultValue={0}
+                                        onChange={(e) => (moneyToReceive.current = parseInt(e.target.value))} />€ et
+                                <Select
+                                  multi={true}
+                                  searchable={true}
+                                  values={values2.current}
+                                  onChange={(v) => (values2.current = v)}
+                                  options={options2} />
+                              </>
+                            );
+                          },
+                          buttons: [
+                            {
+                              label: 'Echanger',
+                              onClick: () => {
+                                socket.emit('trade-request', JSON.stringify({
+                                  player: player.name,
+                                  moneyToReceive: moneyToReceive?.current ?? 0,
+                                  moneyToGive: moneyToGive?.current ?? 0,
+                                  cardToGive: values1.current,
+                                  cardToReceive: values2.current
+                                }));
+                              }
+                            }
+                          ]
+                        });
+                      }, 250);
+                    }
+                  }
+                })
+              });
+            }}>Faire un échange</button>
           </div>
         </>
       ) : <></>}
@@ -60,6 +149,7 @@ interface CenterProps {
   isPlayer?: boolean;
   avatar?: string;
   account?: number;
+  players?: Player[];
 }
 
 const mapStateToProps = (state: State, ownProps: CenterProps) => {
@@ -67,7 +157,8 @@ const mapStateToProps = (state: State, ownProps: CenterProps) => {
     isPlayerTurn: state.turn === ownProps.username,
     isPlayer: state.players.some((player) => player.name === ownProps.username),
     avatar: state.players.find((player) => player.name === ownProps.username)?.avatar,
-    account: state.players.find((player) => player.name === ownProps.username)?.account
+    account: state.players.find((player) => player.name === ownProps.username)?.account,
+    players: state.players
   }
 }
 

@@ -33,19 +33,18 @@ body {
   font-family: "Oswald", sans-serif;
   font-weight: 400;
   font-size: 10px;
-  color: #080808;
-}
-
-body:not(.popup) {
   text-transform: uppercase;
+  color: #080808;
 }
 
 .popup {
   font-size: 2rem;
+  text-transform: none;
 }
 
 .popup-sm {
-  font-size: 1.3rem;
+  font-size: 1.7rem;
+  text-transform: none;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -471,4 +470,9 @@ h1, h2, h3, h4, h5, h6 {
 .deck-card {
   height: 11.6rem;
   width: 15.6rem;
+}
+
+.react-confirm-alert-body h1 {
+  font-size: 2rem;
+  text-transform: none;
 }
