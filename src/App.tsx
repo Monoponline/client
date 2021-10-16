@@ -146,15 +146,15 @@ class App extends Component<AppProps, { loggedIn: boolean, name: string, isInGam
       const trade = JSON.parse(json);
       confirmAlert({
         title: `${player} demande de faire un échange`,
-        message: `${player} vous demande ${trade.cardToReceive.map((card: any) => card.label).join(', ') ?? 'Aucune propriété'} et ${trade.moneyToReceive}€ contre ${trade.cardToGive.map((card: any) => card.label).join(', ') ?? 'Aucune propriété'} et ${trade.moneyToGive}€`,
+        message: `${player} vous demande ${trade.cardToReceive.length ? trade.cardToReceive.map((card: any) => card.label).join(', ') : 'Aucune propriété'} et ${trade.moneyToReceive}€ contre ${trade.cardToGive.length ? trade.cardToGive.map((card: any) => card.label).join(', ') : 'Aucune propriété'} et ${trade.moneyToGive}€`,
         buttons: [
           {
             label: 'Accepter',
-            onClick: () => {}
+            onClick: () => this.state.socket.emit('response-trade', true)
           },
           {
             label: 'Refuser',
-            onClick: () => {}
+            onClick: () => this.state.socket.emit('response-trade', false)
           }
         ],
         closeOnEscape: false,

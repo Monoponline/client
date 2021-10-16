@@ -38,7 +38,7 @@ const Center: FC<CenterProps> = (props) => {
                       setTimeout(() => {
                         confirmAlert({
                           title: `Echange avec ${player.name}`,
-                          message: 'Echanger',
+                          message: 'Donner',
                           childrenElement: () => {
                             values1.current = [];
                             values2.current = [];
@@ -47,14 +47,14 @@ const Center: FC<CenterProps> = (props) => {
                             let temp = props.players!.find((player) => player.name === props.username)!;
                             temp.properties.forEach((j) => {
                               options1.push({
-                                label: Board.find((cell) => cell.position === j)!.name,
+                                label: Board.find((cell) => cell.position === j)?.name ?? '',
                                 value: j
                               });
                             });
                             let options2 = [] as { label: string, value: any }[];
                             player.properties.forEach((j) => {
                               options2.push({
-                                label: Board.find((cell) => cell.position === j)!.name,
+                                label: Board.find((cell) => cell.position === j)?.name ?? '',
                                 value: j
                               });
                             });
@@ -65,7 +65,7 @@ const Center: FC<CenterProps> = (props) => {
                                   type="number"
                                   placeholder="Argent supplémentaire"
                                   defaultValue={0}
-                                  onChange={(e) => (moneyToGive.current = parseInt(e.target.value))} />€
+                                  onChange={(e) => (moneyToGive.current = parseInt(e.target.value))} />€ et
                                 <Select
                                   multi={true}
                                   searchable={true}
