@@ -142,6 +142,9 @@ class App extends Component<AppProps, { loggedIn: boolean, name: string, isInGam
     this.state.socket.on('trade-req-sent', () => {
       toast.success(<h3 className="popup">Demande d'échange envoyé!</h3>);
     });
+    this.state.socket.on('canceled-trade', () => {
+      toast.error(<h3 className="popup">Echange refusé!</h3>);
+    });
     this.state.socket.on('trade-req', (player: string, json: string) => {
       const trade = JSON.parse(json);
       confirmAlert({
