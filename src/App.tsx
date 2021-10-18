@@ -6,8 +6,9 @@ import { connect } from 'react-redux';
 import { DefaultEventsMap } from "socket.io-client/build/typed-events";
 import Game from "./components/Game";
 import SocketContext from "./contexts/SocketContext";
-import Actions from './reducers/Actions';
+import { resetState, updateState } from './reducers/Actions';
 import { Player, State } from './reducers/rootReducer';
+import { v4 as uuidv4 } from 'uuid';
 
 class App extends Component<AppProps, { loggedIn: boolean, name: string, isInGame: boolean, gameId: string, socket?: Socket<DefaultEventsMap, DefaultEventsMap> }> {
   state = {
@@ -214,6 +215,23 @@ class App extends Component<AppProps, { loggedIn: boolean, name: string, isInGam
     });
   }
 
+  handleCreateGame = (e: MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    const gameId = uuidv4().split('-')[0];
+    this.state.socket.emit('request-join-game', gameId);
+    this.setState({
+      isInGame: true,
+      gameId
+    });
+    const el = document.createElement('textarea');
+    el.value = gameId;
+    document.body.appendChild(el);
+    el.select();
+    document.execCommand('copy');
+    document.body.removeChild(el);
+    toast.success(<h3 className="popup">Identifiant de la partie copié!</h3>);
+  }
+
   render() {
     return this.state.isInGame ? (
       <>
@@ -232,6 +250,9 @@ class App extends Component<AppProps, { loggedIn: boolean, name: string, isInGam
             <input placeholder="ID de la partie" value={this.state.gameId} type="text" onChange={this.handleJoinGameChange} style={{ width: '25rem', height: '8rem', fontSize: '3rem' }} />
             <button onClick={this.handleJoinGameClick} style={{ width: '16rem', height: '8rem', fontSize: '3rem' }}>Rejoindre la partie</button>
           </form>
+          <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'center' }}><br />
+            <button style={{ width: '32rem', height: '8rem', fontSize: '3rem' }} onClick={this.handleCreateGame}>Créer une partie</button>
+          </div>
         </>
       ) : (
         <>
@@ -262,10 +283,10 @@ const mapStateToProps = (state: State) => {
 const mapDispatchToProps = (dispatch: any) => {
   return {
     updateState: (gameState: State) => {
-      dispatch({ type: Actions.UPDATE_STATE, gameState });
+      dispatch(updateState(gameState));
     },
     resetState: () => {
-      dispatch({ type: Actions.RESET_STATE });
+      dispatch(resetState());
     }
   }
 }
