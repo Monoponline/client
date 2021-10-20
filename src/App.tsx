@@ -86,6 +86,9 @@ class App extends Component<AppProps, { loggedIn: boolean, name: string, isInGam
         toast.info(<h3 className="popup-sm">{player} est en Prison!</h3>);
       }
     });
+    this.state.socket.on('bought-house', (cell: string) => {
+      toast.success(<h3 className="popup-sm">Vous avez acheter une maison sur {cell}!</h3>);
+    });
     this.state.socket.on('paid-luxury-taxe', (player: string) => {
       toast.info(<h3 className="popup">{player === this.state.name ? 'Vous avez' : `${player} a`} payer 100€ pour la taxe de luxe.</h3>);
     });
