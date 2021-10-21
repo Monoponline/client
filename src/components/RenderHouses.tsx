@@ -6,7 +6,6 @@ import house from './../images/house.png';
 import hotel from './../images/hotel.png';
 import Board from '../Board';
 import SocketContext from '../contexts/SocketContext';
-import { getAvatar } from './RenderPlayers';
 
 const RenderHouses: FC<RenderHousesCellProps> = (props) => {
   const ctx = useContext(SocketContext);
@@ -29,25 +28,36 @@ const RenderHouses: FC<RenderHousesCellProps> = (props) => {
       .length
   ) canUpgrade = true;
 
+  function getCellHouses(position: number) {
+    const state = props.houses;
+    for (const house of state) {
+      if (house.cell === position) return house.houses;
+    }
+    return 0;
+  }
+
   return (
-    <div className="houses">
-      {houses.length !== 0 ? (
-        h?.houses === 5 ? (
-          <img src={hotel} alt="Hotel" className="hotel" />
-        ) : houses.map((_, index) => <img key={index} src={house} alt="House" className="house" />)
-      ) : (<></>)}
-      {canUpgrade && h?.houses !== 5 && props.turn === owner?.name ? (
-        <div style={{ marginTop: '0rem' }}>
-          <button style={{ marginLeft: '1.4rem', position: 'fixed', fontSize: '1.2rem' }} onClick={() => ctx.emit('buy-property', props.cell)}>-</button>
-          <button style={{ marginLeft: '-4rem', position: 'fixed', fontSize: '1.2rem' }} onClick={() => ctx.emit('sell-property', props.cell)}>+</button>
-        </div>
-      ) : (<></>)}
-      {owner ? (
-        <div style={{ marginTop: '-4rem' }}>
-          <img src={getAvatar(owner.avatar)} alt={owner.name} width="25rem" />
-        </div>
-      ) : (<></>)}
-    </div>
+    <>
+      <div className="houses">
+        {houses.length !== 0 && (
+          h?.houses === 5 ? (
+            <img src={hotel} alt="Hotel" className="hotel" />
+          ) : houses.map((_, index) => <img key={index} src={house} alt="House" className="house" />)
+        )}
+      </div>
+      <div className="houses">
+        {canUpgrade && props.turn === owner?.name && (
+          <div>
+            {h?.houses !== 5 && !Board.filter((c) => c.color === Board[props.cell].color).find((c) => getCellHouses(c.position) < getCellHouses(props.cell)) && (
+              <button style={{ marginLeft: '1.4rem', position: 'fixed', fontSize: '1.2rem' }} onClick={() => ctx.emit('buy-property', props.cell)}>+</button>
+            )}
+            {h?.houses && h.houses > 0 && (
+              <button style={{ marginLeft: '-4rem', position: 'fixed', fontSize: '1.2rem' }} onClick={() => ctx.emit('sell-property', props.cell)}>-</button>
+            )}
+          </div>
+        )}
+      </div>
+    </>
   );
 };
 

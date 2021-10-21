@@ -13,11 +13,21 @@ import wheelbarrow from './../images/wheelbarrow.png';
 
 const RenderPlayers: FC<RenderPlayersCellProps> = (props) => {
   const players = props.players.filter(player => player.position === props.cell);
+  const owner = props.players.find((p) => p.properties.includes(props.cell));
 
   return (
-    <div className="players">
-      {players.map((player, index) => <img key={index} src={getAvatar(player.avatar)} alt={player.name} />)}
-    </div>
+    <>
+      <div className="players">
+        {players.map((player, index) => <img key={index} src={getAvatar(player.avatar)} alt={player.name} />)}
+      </div>
+      <div className="houses">
+        {owner && (
+          <div style={{ marginTop: '-4rem' }}>
+            <img src={getAvatar(owner.avatar)} alt={owner.name} width="25rem" />
+          </div>
+        )}
+      </div>
+    </>
   );
 };
 

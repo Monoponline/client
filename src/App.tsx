@@ -31,7 +31,7 @@ class App extends Component<AppProps, { loggedIn: boolean, name: string, isInGam
     if (this.state.name === '') return toast.error(<h3 className="popup">Pseudo Invalide!</h3>);
     const isTaken = await this.usernameTaken();
     if (isTaken) return toast.error(<h3 className="popup">Pseudo déjà pris!</h3>);
-    this.state.socket = io('ws://localhost:8080', {
+    this.state.socket = io('wss://monoponline.herokuapp.com', {
       query: {
         username: this.state.name
       },
@@ -47,6 +47,12 @@ class App extends Component<AppProps, { loggedIn: boolean, name: string, isInGam
       });
       toast.success(<h3 className="popup">Vous avez gagné!</h3>);
       this.props.resetState();
+    });
+    this.state.socket.on('sold-house', (cell: string) => {
+      toast.success(<h3 className="popup">Vous avez vendu une maison sur {cell}!</h3>);
+    });
+    this.state.socket.on('cant-sell', () => {
+      toast.success(<h3 className="popup">Vous ne pouvez pas vendre de maisons!</h3>);
     });
     this.state.socket.on('joined-game', (id: string, spectator?: boolean) => {
       toast.success(<h3 className="popup">Vous avez rejoint la partie {id}{spectator ? ' (spectateur)' : ''}!</h3>);
@@ -70,6 +76,9 @@ class App extends Component<AppProps, { loggedIn: boolean, name: string, isInGam
     this.state.socket.on('paid-rent', (player: string, renter: string, rent: number) => {
       toast.info(<h3 className="popup">{player === this.state.name ? 'Vous avez' : `${player} a`} payer {rent}€ à {renter === this.state.name ? 'vous' : renter}</h3>);
     });
+    this.state.socket.on('cant-upgrade', () => {
+      toast.error(<h3 className="popup">Vous ne pouvez pas acheter de maisons!</h3>);
+    });
     this.state.socket.on('player-in-jail', (player: string) => {
       if (player === this.state.name) {
         confirmAlert({
@@ -83,11 +92,11 @@ class App extends Component<AppProps, { loggedIn: boolean, name: string, isInGam
           ]
         })
       } else {
-        toast.info(<h3 className="popup-sm">{player} est en Prison!</h3>);
+        toast.info(<h3 className="popup">{player} est en Prison!</h3>);
       }
     });
     this.state.socket.on('bought-house', (cell: string) => {
-      toast.success(<h3 className="popup-sm">Vous avez acheter une maison sur {cell}!</h3>);
+      toast.success(<h3 className="popup">Vous avez acheter une maison sur {cell}!</h3>);
     });
     this.state.socket.on('paid-luxury-taxe', (player: string) => {
       toast.info(<h3 className="popup">{player === this.state.name ? 'Vous avez' : `${player} a`} payer 100€ pour la taxe de luxe.</h3>);
@@ -197,7 +206,7 @@ class App extends Component<AppProps, { loggedIn: boolean, name: string, isInGam
   }
 
   usernameTaken = async () => {
-    const res = await fetch(`http://localhost:8080/is-username-taken?username=${this.state.name}`);
+    const res = await fetch(`https://monoponline.herokuapp.com/is-username-taken?username=${this.state.name}`);
     const isTaken = await res.json() as boolean;
     return isTaken;
   }
