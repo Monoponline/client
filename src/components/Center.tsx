@@ -42,6 +42,8 @@ const Center: FC<CenterProps> = (props) => {
                           childrenElement: () => {
                             values1.current = [];
                             values2.current = [];
+                            moneyToGive.current = 0;
+                            moneyToReceive.current = 0;
 
                             let options1 = [] as { label: string, value: any }[];
                             let temp = props.players!.find((player) => player.name === props.username)!;

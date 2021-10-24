@@ -1,9 +1,9 @@
+import { DefaultEventsMap } from "@socket.io/component-emitter";
 import { ChangeEvent, Component, MouseEvent } from "react";
 import { toast, ToastContainer } from "react-toastify";
 import { confirmAlert } from 'react-confirm-alert';
 import { io, Socket } from "socket.io-client";
 import { connect } from 'react-redux';
-import { DefaultEventsMap } from "socket.io-client/build/typed-events";
 import Game from "./components/Game";
 import SocketContext from "./contexts/SocketContext";
 import { resetState, updateState } from './reducers/Actions';
@@ -17,7 +17,7 @@ class App extends Component<AppProps, { loggedIn: boolean, name: string, isInGam
     isInGame: false,
     gameId: '',
     // @ts-ignore
-    socket: null as Socket<DefaultEventsMap, DefaultEventsMap>
+    socket: null as Socket<DefaultEventMap, DefaultEventsMap>
   }
 
   handleNameChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -31,7 +31,7 @@ class App extends Component<AppProps, { loggedIn: boolean, name: string, isInGam
     if (this.state.name === '') return toast.error(<h3 className="popup">Pseudo Invalide!</h3>);
     const isTaken = await this.usernameTaken();
     if (isTaken) return toast.error(<h3 className="popup">Pseudo déjà pris!</h3>);
-    this.state.socket = io('wss://monoponline.herokuapp.com', {
+    this.state.socket = io('ws://localhost:8080', {
       query: {
         username: this.state.name
       },
@@ -206,7 +206,7 @@ class App extends Component<AppProps, { loggedIn: boolean, name: string, isInGam
   }
 
   usernameTaken = async () => {
-    const res = await fetch(`https://monoponline.herokuapp.com/is-username-taken?username=${this.state.name}`);
+    const res = await fetch(`http://localhost:8080/is-username-taken?username=${this.state.name}`);
     const isTaken = await res.json() as boolean;
     return isTaken;
   }
