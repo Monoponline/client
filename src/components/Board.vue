@@ -12,7 +12,7 @@
       </div>
       <div class="corner br" style="--order: 41">
         <div>
-          <em>collect \n £200 salary as you pass</em>
+          <em>collect \n 200€ salary as you pass</em>
           go <span>↖️</span>
         </div>
       </div>
@@ -28,6 +28,12 @@
         :style="'--order: ' + cell.order + ';'"
       >
         <div class="inside">
+          <!-- <div class="fixed self-center items-center ml-5 mt-5">
+            <img
+              src="https://cdn.pixabay.com/photo/2013/07/13/11/36/game-158470_1280.png"
+              class="w-5"
+            />
+          </div> -->
           <h2>{{ cell.label }}</h2>
           <span>{{ cell.icon }}</span>
           <strong>{{ cell.price }}</strong>
@@ -35,16 +41,77 @@
       </div>
     </div>
   </div>
+  <nav
+    class="
+      rounded-xl
+      fixed
+      bottom-0
+      inset-x-0
+      bg-blue-100
+      flex
+      justify-between
+      text-sm text-green-700
+      uppercase
+      font-mono
+    "
+  >
+    <button
+      class="
+        w-full
+        block
+        py-3
+        px-3
+        text-center
+        hover:bg-green-200 hover:text-green-800
+        transition
+        duration-300
+        rounded-xl
+      "
+    >
+      Acheter des maisons</button
+    ><button
+      href="#"
+      class="
+        w-full
+        block
+        py-3
+        px-3
+        text-center
+        hover:bg-green-200 hover:text-green-800
+        transition
+        duration-300
+        rounded-xl
+      "
+    >
+      Faire un échange</button
+    ><button
+      href="#"
+      class="
+        w-full
+        block
+        py-3
+        px-3
+        text-center
+        hover:bg-green-200 hover:text-green-800
+        transition
+        duration-300
+        rounded-xl
+      "
+    >
+      Lancer les dés
+    </button>
+  </nav>
 </template>
 
 <script>
 export default {
+  name: 'Board',
   data() {
     return {
       cells: [
         {
           label: 'strand',
-          price: '£220',
+          price: '220€',
           icon: '',
           color: 'red',
           order: '2',
@@ -60,7 +127,7 @@ export default {
         },
         {
           label: 'fleet street',
-          price: '£220',
+          price: '220€',
           icon: '',
           color: 'red',
           order: '4',
@@ -68,7 +135,7 @@ export default {
         },
         {
           label: 'trafalgar square',
-          price: '£240',
+          price: '240€',
           icon: '',
           color: 'none',
           order: '5',
@@ -76,7 +143,7 @@ export default {
         },
         {
           label: 'fenchurch st. station',
-          price: '£200',
+          price: '200€',
           icon: '🚂',
           color: 'none',
           order: '6',
@@ -84,7 +151,7 @@ export default {
         },
         {
           label: 'leicester square',
-          price: '£260',
+          price: '260€',
           icon: '',
           color: 'yellow',
           order: '7',
@@ -92,7 +159,7 @@ export default {
         },
         {
           label: 'ceventry street',
-          price: '£200',
+          price: '200€',
           icon: '',
           color: 'yellow',
           order: '8',
@@ -100,7 +167,7 @@ export default {
         },
         {
           label: 'water\nworks',
-          price: '£150',
+          price: '150€',
           icon: '🚰',
           color: 'none',
           order: '9',
@@ -108,7 +175,7 @@ export default {
         },
         {
           label: 'piccadilly',
-          price: '£280',
+          price: '280€',
           icon: '',
           color: 'yellow',
           order: '10',
@@ -116,7 +183,7 @@ export default {
         },
         {
           label: 'vine street',
-          price: '£200',
+          price: '200€',
           icon: '',
           color: 'orange',
           order: '12',
@@ -124,7 +191,7 @@ export default {
         },
         {
           label: "marlborog'h street",
-          price: '£200',
+          price: '200€',
           icon: '',
           color: 'orange',
           order: '15',
@@ -140,7 +207,7 @@ export default {
         },
         {
           label: 'bow street',
-          price: '£180',
+          price: '180€',
           icon: '',
           color: 'orange',
           order: '19',
@@ -148,7 +215,7 @@ export default {
         },
         {
           label: 'marylebone station',
-          price: '£200',
+          price: '200€',
           icon: '🚂',
           color: 'none',
           order: '21',
@@ -156,7 +223,7 @@ export default {
         },
         {
           label: "northumrl'd avenue",
-          price: '£160',
+          price: '160€',
           icon: '',
           color: 'pink',
           order: '23',
@@ -164,7 +231,7 @@ export default {
         },
         {
           label: 'whitehall',
-          price: '£140',
+          price: '140€',
           icon: '',
           color: 'pink',
           order: '25',
@@ -172,7 +239,7 @@ export default {
         },
         {
           label: 'electric company',
-          price: '£150',
+          price: '150€',
           icon: '💡',
           color: 'none',
           order: ' 27',
@@ -180,7 +247,7 @@ export default {
         },
         {
           label: 'pall mall',
-          price: '£140',
+          price: '140€',
           icon: '',
           color: 'pink',
           order: '29',
@@ -188,7 +255,7 @@ export default {
         },
         {
           label: 'regent street',
-          price: '£300',
+          price: '300€',
           icon: '',
           color: 'green',
           order: '14',
@@ -196,7 +263,7 @@ export default {
         },
         {
           label: 'oxford street',
-          price: '£300',
+          price: '300€',
           icon: '',
           color: 'green',
           order: '16',
@@ -212,7 +279,7 @@ export default {
         },
         {
           label: 'bond street',
-          price: '£320',
+          price: '320€',
           icon: '',
           color: 'green',
           order: '20',
@@ -220,7 +287,7 @@ export default {
         },
         {
           label: 'liverpool st. station',
-          price: '£320',
+          price: '320€',
           icon: '🚂',
           color: 'none',
           order: '22',
@@ -236,7 +303,7 @@ export default {
         },
         {
           label: 'park lane',
-          price: '£350',
+          price: '350€',
           icon: '',
           color: 'blue',
           order: '26',
@@ -244,7 +311,7 @@ export default {
         },
         {
           label: 'super\ntax',
-          price: '£100',
+          price: '100€',
           icon: '💍',
           color: 'none',
           order: '28',
@@ -252,7 +319,7 @@ export default {
         },
         {
           label: 'mayfair',
-          price: '£400',
+          price: '400€',
           icon: '',
           color: 'blue',
           order: '30',
@@ -260,7 +327,7 @@ export default {
         },
         {
           label: 'pentonville road',
-          price: '£120',
+          price: '120€',
           icon: '',
           color: 'sky',
           order: '32',
@@ -268,7 +335,7 @@ export default {
         },
         {
           label: 'euston road',
-          price: '£100',
+          price: '100€',
           icon: '',
           color: 'sky',
           order: '33',
@@ -284,7 +351,7 @@ export default {
         },
         {
           label: 'the angel, islington',
-          price: '£100',
+          price: '100€',
           icon: '',
           color: 'sky',
           order: '35',
@@ -292,7 +359,7 @@ export default {
         },
         {
           label: 'kings cross station',
-          price: '£200',
+          price: '200€',
           icon: '🚂',
           color: 'none',
           order: '36',
@@ -300,7 +367,7 @@ export default {
         },
         {
           label: 'income\ntax',
-          price: '£200',
+          price: '200€',
           icon: '🔸',
           color: 'none',
           order: '37',
@@ -308,7 +375,7 @@ export default {
         },
         {
           label: 'whitechapel road',
-          price: '£60',
+          price: '60€',
           icon: '',
           color: 'brown',
           order: '38',
@@ -324,7 +391,7 @@ export default {
         },
         {
           label: 'old kent road',
-          price: '£60',
+          price: '60€',
           icon: '',
           color: 'brown',
           order: '40',
@@ -335,9 +402,6 @@ export default {
   },
   methods: {
     tableClick() {
-      /**
-       * @type {HTMLElement} - The table html element
-       */
       const table = this.$refs.table;
       if (table.classList.contains('stop')) {
         table.classList.remove('stop');
@@ -359,37 +423,7 @@ export default {
 };
 </script>
 
-<style>
-* {
-  box-sizing: border-box;
-  outline: 0px;
-}
-
-main {
-  display: block;
-  position: absolute;
-  width: calc(100% - 40px);
-  height: calc(100% - 40px);
-  top: 20px;
-  left: 20px;
-  bottom: 40px;
-  right: 40px;
-  font-family: 'Hammersmith One';
-  color: #2e464d;
-  border-radius: 20px;
-  background: #c0e3e2;
-  perspective: 1000px;
-}
-main:before {
-  display: block;
-  position: absolute;
-  width: 100%;
-  bottom: 60px;
-  left: 0px;
-  text-align: center;
-  text-transform: uppercase;
-  color: rgba(46, 70, 77, 0.2);
-}
+<style scoped>
 main .table {
   display: block;
   position: absolute;
