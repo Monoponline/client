@@ -1,10 +1,8 @@
 <template>
-  <main>
-    <router-view />
-  </main>
+  <router-view />
 </template>
 
-<style scoped>
+<style>
 * {
   box-sizing: border-box;
   outline: 0px;

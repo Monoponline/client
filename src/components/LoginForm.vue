@@ -41,7 +41,7 @@
 
 <script>
 export default {
-  name: 'LoginForm',
+  name: 'login-form',
   emits: ['clicked'],
   data() {
     return {

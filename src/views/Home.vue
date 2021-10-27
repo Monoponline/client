@@ -1,17 +1,19 @@
 <template>
-  <div class="text-center text-lg mt-3">
-    <router-link active-class="text-green-500" to="/">Home</router-link> |
-    <router-link active-class="text-green-500" to="/about">About</router-link>
-  </div>
-  <div class="text-center">
-    <h1 class="mt-36 text-6xl">Welcome to Monoponline!</h1>
-    <LoginForm v-if="!loggedIn" v-on:clicked="handleLogin" />
-    <JoinGameForm
-      v-if="loggedIn"
-      v-on:join-game="handleJoinGame"
-      v-on:create-game="handleCreateGame"
-    />
-  </div>
+  <main>
+    <div class="text-center text-lg mt-3">
+      <router-link active-class="text-green-500" to="/">Home</router-link> |
+      <router-link active-class="text-green-500" to="/about">About</router-link>
+    </div>
+    <div class="text-center">
+      <h1 class="mt-36 text-6xl">Welcome to Monoponline!</h1>
+      <login-form v-if="!loggedIn" v-on:clicked="handleLogin" />
+      <join-game-form
+        v-if="loggedIn"
+        v-on:join-game="handleJoinGame"
+        v-on:create-game="handleCreateGame"
+      />
+    </div>
+  </main>
 </template>
 
 <script>
@@ -80,6 +82,7 @@ export default {
     LoginForm
   },
   beforeMount() {
+    JoinGameForm;
     this.loggedIn = this.$store.getters.getStatus === STATUS.LOGGED_IN;
   }
 };

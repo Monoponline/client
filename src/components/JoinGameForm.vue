@@ -40,6 +40,7 @@
         focus:ring-green-400
         focus:ring-opacity-75
       "
+      LoginForm
     >
       Join Game
     </button>
@@ -68,7 +69,7 @@
 
 <script>
 export default {
-  name: 'JoinGameForm',
+  name: 'join-game-form',
   emits: ['join-game', 'create-game'],
   data() {
     return {

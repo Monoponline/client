@@ -3,18 +3,34 @@
     <div class="frame">
       <div class="corner tl" style="--order: 1">
         <div>free <span>🅿️</span> parking</div>
+        <img
+          src="https://cdn.pixabay.com/photo/2013/07/13/11/36/game-158470_1280.png"
+          class="w-5 -mt-16 ml-10"
+        />
       </div>
       <div class="corner tr" style="--order: 11">
         <div>go to <span>👮</span> jail</div>
+        <img
+          src="https://cdn.pixabay.com/photo/2013/07/13/11/36/game-158470_1280.png"
+          class="w-5 -mt-16 ml-10"
+        />
       </div>
       <div class="corner bl" style="--order: 31">
         <div>in <span>🗝</span> jail</div>
+        <img
+          src="https://cdn.pixabay.com/photo/2013/07/13/11/36/game-158470_1280.png"
+          class="w-5 -mt-16 ml-10"
+        />
       </div>
       <div class="corner br" style="--order: 41">
         <div>
           <em>collect \n 200€ salary as you pass</em>
           go <span>↖️</span>
         </div>
+        <img
+          src="https://cdn.pixabay.com/photo/2013/07/13/11/36/game-158470_1280.png"
+          class="w-5 -mt-16 ml-10"
+        />
       </div>
       <div class="center" style="--order: 13">
         <div class="logo">monopoly</div>
@@ -28,12 +44,16 @@
         :style="'--order: ' + cell.order + ';'"
       >
         <div class="inside">
-          <!-- <div class="fixed self-center items-center ml-5 mt-5">
+          <div class="fixed self-center items-center ml-5">
             <img
               src="https://cdn.pixabay.com/photo/2013/07/13/11/36/game-158470_1280.png"
               class="w-5"
             />
-          </div> -->
+            <img
+              src="https://cdn.pixabay.com/photo/2013/07/13/11/36/game-158470_1280.png"
+              class="w-5"
+            />
+          </div>
           <h2>{{ cell.label }}</h2>
           <span>{{ cell.icon }}</span>
           <strong>{{ cell.price }}</strong>
@@ -41,71 +61,11 @@
       </div>
     </div>
   </div>
-  <nav
-    class="
-      rounded-xl
-      fixed
-      bottom-0
-      inset-x-0
-      bg-blue-100
-      flex
-      justify-between
-      text-sm text-green-700
-      uppercase
-      font-mono
-    "
-  >
-    <button
-      class="
-        w-full
-        block
-        py-3
-        px-3
-        text-center
-        hover:bg-green-200 hover:text-green-800
-        transition
-        duration-300
-        rounded-xl
-      "
-    >
-      Acheter des maisons</button
-    ><button
-      href="#"
-      class="
-        w-full
-        block
-        py-3
-        px-3
-        text-center
-        hover:bg-green-200 hover:text-green-800
-        transition
-        duration-300
-        rounded-xl
-      "
-    >
-      Faire un échange</button
-    ><button
-      href="#"
-      class="
-        w-full
-        block
-        py-3
-        px-3
-        text-center
-        hover:bg-green-200 hover:text-green-800
-        transition
-        duration-300
-        rounded-xl
-      "
-    >
-      Lancer les dés
-    </button>
-  </nav>
 </template>
 
 <script>
 export default {
-  name: 'Board',
+  name: 'board',
   data() {
     return {
       cells: [
@@ -323,7 +283,8 @@ export default {
           icon: '',
           color: 'blue',
           order: '30',
-          pos: 'right'
+          pos: 'right',
+          cell: 10
         },
         {
           label: 'pentonville road',
@@ -331,7 +292,8 @@ export default {
           icon: '',
           color: 'sky',
           order: '32',
-          pos: 'bottom'
+          pos: 'bottom',
+          cell: 9
         },
         {
           label: 'euston road',
@@ -339,7 +301,8 @@ export default {
           icon: '',
           color: 'sky',
           order: '33',
-          pos: 'bottom'
+          pos: 'bottom',
+          cell: 8
         },
         {
           label: 'chance',
@@ -347,7 +310,8 @@ export default {
           icon: '❓',
           color: 'none',
           order: '34',
-          pos: 'bottom'
+          pos: 'bottom',
+          cell: 7
         },
         {
           label: 'the angel, islington',
@@ -355,7 +319,8 @@ export default {
           icon: '',
           color: 'sky',
           order: '35',
-          pos: 'bottom'
+          pos: 'bottom',
+          cell: 6
         },
         {
           label: 'kings cross station',
@@ -363,7 +328,8 @@ export default {
           icon: '🚂',
           color: 'none',
           order: '36',
-          pos: 'bottom'
+          pos: 'bottom',
+          cell: 5
         },
         {
           label: 'income\ntax',
@@ -371,7 +337,8 @@ export default {
           icon: '🔸',
           color: 'none',
           order: '37',
-          pos: 'bottom'
+          pos: 'bottom',
+          cell: 4
         },
         {
           label: 'whitechapel road',
@@ -379,7 +346,8 @@ export default {
           icon: '',
           color: 'brown',
           order: '38',
-          pos: 'bottom'
+          pos: 'bottom',
+          cell: 3
         },
         {
           label: 'community chest',
@@ -387,7 +355,8 @@ export default {
           icon: '💰',
           color: 'none',
           order: '39',
-          pos: 'bottom'
+          pos: 'bottom',
+          cell: 2
         },
         {
           label: 'old kent road',
@@ -395,7 +364,8 @@ export default {
           icon: '',
           color: 'brown',
           order: '40',
-          pos: 'bottom'
+          pos: 'bottom',
+          cell: 1
         }
       ]
     };
@@ -670,12 +640,20 @@ main .table.rotation {
   animation: spin135 1ms;
   animation-play-state: paused;
 }
+.frame > div.corner.tl img {
+  animation: spin135 1ms;
+  animation-play-state: paused;
+}
 .frame > div.corner.tr {
   border-radius: 1px 8px 1px 4px;
 }
 .frame > div.corner.tr div {
   top: -5px;
   left: 5px;
+  animation: spin-135 1ms;
+  animation-play-state: paused;
+}
+.frame > div.corner.tr img {
   animation: spin-135 1ms;
   animation-play-state: paused;
 }
@@ -688,6 +666,10 @@ main .table.rotation {
   animation: spin45 1ms;
   animation-play-state: paused;
 }
+.frame > div.corner.bl img {
+  animation: spin45 1ms;
+  animation-play-state: paused;
+}
 .frame > div.corner.br {
   border-radius: 4px 1px 8px 1px;
 }
@@ -695,6 +677,10 @@ main .table.rotation {
   top: 5px;
   left: 5px;
   font-size: 30px;
+  animation: spin-45 1ms;
+  animation-play-state: paused;
+}
+.frame > div.corner.br img {
   animation: spin-45 1ms;
   animation-play-state: paused;
 }
