@@ -13,8 +13,30 @@ export default createStore({
   state: {
     status: 'LOBBY',
     username: TMP_USERNAME ?? '',
-    gameState: {},
-    socket: undefined
+    gameState: {
+      players: [
+        {
+          name: 'SkyDonald',
+          avatar: 'thimble',
+          position: 13
+        },
+        {
+          name: 'SkyDonald2',
+          avatar: 'iron',
+          position: 23
+        },
+        {
+          name: 'SkyDonald3',
+          avatar: 'dog',
+          position: 33
+        },
+        {
+          name: 'SkyDonald4',
+          avatar: 'shoe',
+          position: 3
+        }
+      ]
+    }
   },
   mutations: {
     setStatus(state, status) {
@@ -55,6 +77,9 @@ export default createStore({
     },
     isInGame(state) {
       return state.status === STATUS.IN_GAME;
+    },
+    getPlayers(state) {
+      return state.gameState.players;
     }
   }
 });

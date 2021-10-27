@@ -3,34 +3,22 @@
     <div class="frame">
       <div class="corner tl" style="--order: 1">
         <div>free <span>🅿️</span> parking</div>
-        <img
-          src="https://cdn.pixabay.com/photo/2013/07/13/11/36/game-158470_1280.png"
-          class="w-5 -mt-16 ml-10"
-        />
+        <render-players :cell="20" :special="true" cclass="tl" />
       </div>
       <div class="corner tr" style="--order: 11">
         <div>go to <span>👮</span> jail</div>
-        <img
-          src="https://cdn.pixabay.com/photo/2013/07/13/11/36/game-158470_1280.png"
-          class="w-5 -mt-16 ml-10"
-        />
+        <render-players :cell="30" :special="true" cclass="tr" />
       </div>
       <div class="corner bl" style="--order: 31">
         <div>in <span>🗝</span> jail</div>
-        <img
-          src="https://cdn.pixabay.com/photo/2013/07/13/11/36/game-158470_1280.png"
-          class="w-5 -mt-16 ml-10"
-        />
+        <render-players :cell="10" :special="true" cclass="bl" />
       </div>
       <div class="corner br" style="--order: 41">
         <div>
           <em>collect \n 200€ salary as you pass</em>
           go <span>↖️</span>
         </div>
-        <img
-          src="https://cdn.pixabay.com/photo/2013/07/13/11/36/game-158470_1280.png"
-          class="w-5 -mt-16 ml-10"
-        />
+        <render-players :cell="0" :special="true" cclass="br" />
       </div>
       <div class="center" style="--order: 13">
         <div class="logo">monopoly</div>
@@ -44,16 +32,7 @@
         :style="'--order: ' + cell.order + ';'"
       >
         <div class="inside">
-          <div class="fixed self-center items-center ml-5">
-            <img
-              src="https://cdn.pixabay.com/photo/2013/07/13/11/36/game-158470_1280.png"
-              class="w-5"
-            />
-            <img
-              src="https://cdn.pixabay.com/photo/2013/07/13/11/36/game-158470_1280.png"
-              class="w-5"
-            />
-          </div>
+          <render-players :cell="cell.cell" :special="false" />
           <h2>{{ cell.label }}</h2>
           <span>{{ cell.icon }}</span>
           <strong>{{ cell.price }}</strong>
@@ -64,6 +43,8 @@
 </template>
 
 <script>
+import RenderPlayers from '@/components/RenderPlayers.vue';
+
 export default {
   name: 'board',
   data() {
@@ -75,7 +56,8 @@ export default {
           icon: '',
           color: 'red',
           order: '2',
-          pos: 'top'
+          pos: 'top',
+          cell: 21
         },
         {
           label: 'chance',
@@ -83,7 +65,8 @@ export default {
           icon: '❓',
           color: 'none',
           order: '3',
-          pos: 'top'
+          pos: 'top',
+          cell: 22
         },
         {
           label: 'fleet street',
@@ -91,7 +74,8 @@ export default {
           icon: '',
           color: 'red',
           order: '4',
-          pos: 'top'
+          pos: 'top',
+          cell: 23
         },
         {
           label: 'trafalgar square',
@@ -99,7 +83,8 @@ export default {
           icon: '',
           color: 'none',
           order: '5',
-          pos: 'top'
+          pos: 'top',
+          cell: 24
         },
         {
           label: 'fenchurch st. station',
@@ -107,7 +92,8 @@ export default {
           icon: '🚂',
           color: 'none',
           order: '6',
-          pos: 'top'
+          pos: 'top',
+          cell: 25
         },
         {
           label: 'leicester square',
@@ -115,7 +101,8 @@ export default {
           icon: '',
           color: 'yellow',
           order: '7',
-          pos: 'top'
+          pos: 'top',
+          cell: 26
         },
         {
           label: 'ceventry street',
@@ -123,7 +110,8 @@ export default {
           icon: '',
           color: 'yellow',
           order: '8',
-          pos: 'top'
+          pos: 'top',
+          cell: 27
         },
         {
           label: 'water\nworks',
@@ -131,7 +119,8 @@ export default {
           icon: '🚰',
           color: 'none',
           order: '9',
-          pos: 'top'
+          pos: 'top',
+          cell: 28
         },
         {
           label: 'piccadilly',
@@ -139,7 +128,8 @@ export default {
           icon: '',
           color: 'yellow',
           order: '10',
-          pos: 'top'
+          pos: 'top',
+          cell: 29
         },
         {
           label: 'vine street',
@@ -147,7 +137,8 @@ export default {
           icon: '',
           color: 'orange',
           order: '12',
-          pos: 'left'
+          pos: 'left',
+          cell: 19
         },
         {
           label: "marlborog'h street",
@@ -155,7 +146,8 @@ export default {
           icon: '',
           color: 'orange',
           order: '15',
-          pos: 'left'
+          pos: 'left',
+          cell: 18
         },
         {
           label: 'community chest',
@@ -163,7 +155,8 @@ export default {
           icon: '💰',
           color: 'none',
           order: '17',
-          pos: 'left'
+          pos: 'left',
+          cell: 17
         },
         {
           label: 'bow street',
@@ -171,7 +164,8 @@ export default {
           icon: '',
           color: 'orange',
           order: '19',
-          pos: 'left'
+          pos: 'left',
+          cell: 16
         },
         {
           label: 'marylebone station',
@@ -179,7 +173,8 @@ export default {
           icon: '🚂',
           color: 'none',
           order: '21',
-          pos: 'left'
+          pos: 'left',
+          cell: 15
         },
         {
           label: "northumrl'd avenue",
@@ -187,7 +182,8 @@ export default {
           icon: '',
           color: 'pink',
           order: '23',
-          pos: 'left'
+          pos: 'left',
+          cell: 14
         },
         {
           label: 'whitehall',
@@ -195,7 +191,8 @@ export default {
           icon: '',
           color: 'pink',
           order: '25',
-          pos: 'left'
+          pos: 'left',
+          cell: 13
         },
         {
           label: 'electric company',
@@ -203,7 +200,8 @@ export default {
           icon: '💡',
           color: 'none',
           order: ' 27',
-          pos: 'left'
+          pos: 'left',
+          cell: 12
         },
         {
           label: 'pall mall',
@@ -211,7 +209,8 @@ export default {
           icon: '',
           color: 'pink',
           order: '29',
-          pos: 'left'
+          pos: 'left',
+          cell: 11
         },
         {
           label: 'regent street',
@@ -219,7 +218,8 @@ export default {
           icon: '',
           color: 'green',
           order: '14',
-          pos: 'right'
+          pos: 'right',
+          cell: 31
         },
         {
           label: 'oxford street',
@@ -227,7 +227,8 @@ export default {
           icon: '',
           color: 'green',
           order: '16',
-          pos: 'right'
+          pos: 'right',
+          cell: 32
         },
         {
           label: 'community chest',
@@ -235,7 +236,8 @@ export default {
           icon: '💰',
           color: 'none',
           order: '18',
-          pos: 'right'
+          pos: 'right',
+          cell: 33
         },
         {
           label: 'bond street',
@@ -243,7 +245,8 @@ export default {
           icon: '',
           color: 'green',
           order: '20',
-          pos: 'right'
+          pos: 'right',
+          cell: 34
         },
         {
           label: 'liverpool st. station',
@@ -251,7 +254,8 @@ export default {
           icon: '🚂',
           color: 'none',
           order: '22',
-          pos: 'right'
+          pos: 'right',
+          cell: 35
         },
         {
           label: 'chance',
@@ -259,7 +263,8 @@ export default {
           icon: '',
           color: 'none',
           order: '24',
-          pos: 'right'
+          pos: 'right',
+          cell: 36
         },
         {
           label: 'park lane',
@@ -267,7 +272,8 @@ export default {
           icon: '',
           color: 'blue',
           order: '26',
-          pos: 'right'
+          pos: 'right',
+          cell: 37
         },
         {
           label: 'super\ntax',
@@ -275,7 +281,8 @@ export default {
           icon: '💍',
           color: 'none',
           order: '28',
-          pos: 'right'
+          pos: 'right',
+          cell: 38
         },
         {
           label: 'mayfair',
@@ -284,7 +291,7 @@ export default {
           color: 'blue',
           order: '30',
           pos: 'right',
-          cell: 10
+          cell: 39
         },
         {
           label: 'pentonville road',
@@ -369,6 +376,9 @@ export default {
         }
       ]
     };
+  },
+  components: {
+    RenderPlayers
   },
   methods: {
     tableClick() {
@@ -640,10 +650,6 @@ main .table.rotation {
   animation: spin135 1ms;
   animation-play-state: paused;
 }
-.frame > div.corner.tl img {
-  animation: spin135 1ms;
-  animation-play-state: paused;
-}
 .frame > div.corner.tr {
   border-radius: 1px 8px 1px 4px;
 }
@@ -653,20 +659,12 @@ main .table.rotation {
   animation: spin-135 1ms;
   animation-play-state: paused;
 }
-.frame > div.corner.tr img {
-  animation: spin-135 1ms;
-  animation-play-state: paused;
-}
 .frame > div.corner.bl {
   border-radius: 1px 4px 1px 8px;
 }
 .frame > div.corner.bl div {
   top: 5px;
   right: 5px;
-  animation: spin45 1ms;
-  animation-play-state: paused;
-}
-.frame > div.corner.bl img {
   animation: spin45 1ms;
   animation-play-state: paused;
 }
@@ -680,10 +678,6 @@ main .table.rotation {
   animation: spin-45 1ms;
   animation-play-state: paused;
 }
-.frame > div.corner.br img {
-  animation: spin-45 1ms;
-  animation-play-state: paused;
-}
 .frame > div.corner.br div em {
   display: block;
   font-size: 7px;
@@ -691,7 +685,6 @@ main .table.rotation {
   margin: 0px auto;
   font-style: normal;
 }
-
 @keyframes spin45 {
   0% {
     transform: rotate(45deg);
