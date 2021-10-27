@@ -21,7 +21,7 @@ import LoginForm from '@/components/LoginForm';
 import JoinGameForm from '@/components/JoinGameForm';
 import { STATUS } from '@/store';
 import io from 'socket.io-client';
-import { setWSInstance, getWSInstance } from '@/contexts/SocketContext';
+import { getContext, setContext } from '@/contexts/SocketContext';
 import { v4 as uuidv4 } from 'uuid';
 
 export default {
@@ -43,8 +43,8 @@ export default {
             }
           });
           ws.connect();
-          setWSInstance(ws);
-          getWSInstance().on('joined-game', (gameId, asSpectator) => {
+          setContext(ws);
+          getContext().on('joined-game', (gameId, asSpectator) => {
             const el = document.createElement('textarea');
             el.value = gameId;
             document.body.appendChild(el);
@@ -70,11 +70,11 @@ export default {
       });
     },
     handleJoinGame(gameId) {
-      getWSInstance().emit('request-join-game', gameId);
+      getContext().emit('request-join-game', gameId);
     },
     handleCreateGame() {
       const gameId = uuidv4().split('-')[0];
-      getWSInstance().emit('request-join-game', gameId);
+      getContext().emit('request-join-game', gameId);
     }
   },
   components: {
