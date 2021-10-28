@@ -1,8 +1,6 @@
 import { createStore } from 'vuex';
 import axios from 'axios';
 
-let TMP_USERNAME = localStorage.getItem('username');
-
 export const STATUS = {
   LOGGED_IN: 'LOGGED_IN',
   LOBBY: 'LOBBY',
@@ -12,30 +10,14 @@ export const STATUS = {
 export default createStore({
   state: {
     status: 'LOBBY',
-    username: TMP_USERNAME ?? '',
+    username: '',
     gameState: {
-      players: [
-        {
-          name: 'SkyDonald',
-          avatar: 'thimble',
-          position: 13
-        },
-        {
-          name: 'SkyDonald2',
-          avatar: 'iron',
-          position: 23
-        },
-        {
-          name: 'SkyDonald3',
-          avatar: 'dog',
-          position: 33
-        },
-        {
-          name: 'SkyDonald4',
-          avatar: 'shoe',
-          position: 3
-        }
-      ]
+      players: [],
+      houses: [],
+      spectating: 0,
+      turn: '',
+      started: false,
+      id: ''
     }
   },
   mutations: {
@@ -44,7 +26,9 @@ export default createStore({
     },
     setUsername(state, username) {
       state.username = username;
-      localStorage.setItem('username', username);
+    },
+    setGameState(state, gameState) {
+      state.gameState = gameState;
     }
   },
   actions: {
@@ -55,7 +39,6 @@ export default createStore({
           .then((res) => {
             if (res.data === false) {
               commit('setStatus', STATUS.LOGGED_IN);
-              localStorage.setItem('username', username);
               resolve(true);
             } else {
               commit('setStatus', STATUS.LOBBY);
@@ -80,6 +63,18 @@ export default createStore({
     },
     getPlayers(state) {
       return state.gameState.players;
+    },
+    getSpectators(state) {
+      return state.gameState.spectating;
+    },
+    getTurn(state) {
+      return state.gameState.turn;
+    },
+    isStarted(state) {
+      return state.gameState.started;
+    },
+    getGameId(state) {
+      return state.gameState.id;
     }
   }
 });

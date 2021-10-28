@@ -13,9 +13,14 @@ const routes = [
     component: () => import('../views/About.vue')
   },
   {
-    path: '/Game',
+    path: '/game',
     name: 'Game',
     component: () => import('../views/Game.vue')
+  },
+  {
+    path: '/share',
+    name: 'Share',
+    component: () => import('../views/Share.vue')
   }
 ];
 
