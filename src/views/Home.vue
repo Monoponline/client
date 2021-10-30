@@ -28,11 +28,20 @@ export default {
   name: 'Home',
   data() {
     return {
-      loggedIn: false
+      loggedIn: false,
+      showModal: true,
+      modalTitle: 'Vous avez été envoyer en prison!',
+      modalBody:
+        "Vous n'en sortirez que dans 3 tours. A moins que vous ne payez 50€ ou que vous avez une carte Sortie de Prison"
     };
   },
   methods: {
+    onClose() {
+      this.showModal = false;
+    },
     handleLogin(username) {
+      if (!username || username === '')
+        return this.$toast.error('Invalid username!');
       this.$store.commit('setUsername', username);
       this.$store.dispatch('login', username).then((validUsername) => {
         if (validUsername) {

@@ -6,7 +6,7 @@
     </div>
     <div class="text-center">
       <h1 class="mt-36 text-6xl">Welcome to Monoponline!</h1>
-      <login-form v-if="!loggedIn" v-on:clicked="handleLogin" />
+      <login-form v-on:clicked="handleLogin" />
     </div>
   </main>
 </template>
@@ -18,18 +18,12 @@ import io from 'socket.io-client';
 import { getContext, setContext } from '@/contexts/SocketContext';
 
 export default {
-  name: 'Home',
-  data() {
-    return {
-      loggedIn: false
-    };
-  },
+  name: 'Invite',
   methods: {
     handleLogin(username) {
       this.$store.commit('setUsername', username);
       this.$store.dispatch('login', username).then((validUsername) => {
         if (validUsername) {
-          this.loggedIn = true;
           const ws = io('ws://localhost:3000', {
             transports: ['websocket'],
             query: {
@@ -67,9 +61,6 @@ export default {
   },
   components: {
     LoginForm
-  },
-  beforeMount() {
-    this.loggedIn = this.$store.getters.getStatus === STATUS.LOGGED_IN;
   }
 };
 </script>

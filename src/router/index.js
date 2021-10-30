@@ -18,9 +18,9 @@ const routes = [
     component: () => import('../views/Game.vue')
   },
   {
-    path: '/share',
-    name: 'Share',
-    component: () => import('../views/Share.vue')
+    path: '/invite',
+    name: 'Invite',
+    component: () => import('../views/Invite.vue')
   }
 ];
 

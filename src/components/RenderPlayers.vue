@@ -1,5 +1,5 @@
 <template>
-  <template v-for="player in players" :key="player.avatar">
+  <template v-for="player in getPlayers()" :key="player.avatar">
     <div v-if="!special" class="fixed self-center items-center ml-5">
       <img :src="getAvatar(player.avatar)" :alt="player.name" class="w-7" />
     </div>
@@ -29,11 +29,6 @@ export default {
     special: Boolean,
     cclass: String
   },
-  data() {
-    return {
-      players: []
-    };
-  },
   methods: {
     getAvatar(avatar) {
       switch (avatar) {
@@ -54,12 +49,12 @@ export default {
         case 'wheelbarrow':
           return wheelbarrow;
       }
+    },
+    getPlayers() {
+      return [...this.$store.getters.getPlayers].filter(
+        (p) => p.position === this.cell
+      );
     }
-  },
-  beforeMount() {
-    this.players = [...this.$store.getters.getPlayers].filter(
-      (p) => p.position === this.cell
-    );
   }
 };
 </script>
