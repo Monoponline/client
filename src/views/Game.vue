@@ -40,7 +40,7 @@
       Commencer la partie
     </button>
   </nav>
-  <nav class="bottom-0" v-if="isStarted()">
+  <nav class="bottom-0" v-if="isStarted() && !isSpectator()">
     <button class="btn" @click="buyHouses()">Acheter des maisons</button>
     <button class="btn" @click="trade()">Faire un échange</button>
     <button v-if="isPlayerTurn()" class="btn" @click="throwDices()">
@@ -117,6 +117,11 @@ export default {
     },
     isPlayerTurn() {
       return this.$store.getters.getUsername === this.getTurn();
+    },
+    isSpectator() {
+      return !this.$store.getters.getPlayers
+        .map((p) => p.name)
+        .includes(this.$store.getters.getUsername);
     }
   },
   beforeCreate() {
@@ -131,7 +136,12 @@ export default {
      */
     const ws = getContext();
     ws.on('win', () => {
-      this.$toast.success('Vous avez gagné!', { position: 'top-right' });
+      if (this.isSpectator()) {
+        const winner = this.$store.getters.getPlayers.map((p) => p.name)[0];
+        this.$toast.success(`${winner} a gagné!`, { position: 'top-right' });
+      } else {
+        this.$toast.success('Vous avez gagné!', { position: 'top-right' });
+      }
       this.$store.commit('setStatus', STATUS.LOGGED_IN);
       this.$router.push('/');
     });
