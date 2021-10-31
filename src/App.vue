@@ -5,7 +5,7 @@
 <style>
 * {
   box-sizing: border-box;
-  outline: 0px;
+  outline: 0;
 }
 
 main {
@@ -29,7 +29,7 @@ main:before {
   position: absolute;
   width: 100%;
   bottom: 60px;
-  left: 0px;
+  left: 0;
   text-align: center;
   text-transform: uppercase;
   color: rgba(46, 70, 77, 0.2);
