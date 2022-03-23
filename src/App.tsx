@@ -1,14 +1,14 @@
-import { ChangeEvent, Component, MouseEvent } from "react";
-import { toast, ToastContainer } from "react-toastify";
-import { confirmAlert } from 'react-confirm-alert';
-import { io, Socket } from "socket.io-client";
-import { connect } from 'react-redux';
-import { DefaultEventsMap } from "socket.io-client/build/typed-events";
+import {ChangeEvent, Component, MouseEvent} from "react";
+import {toast, ToastContainer} from "react-toastify";
+import {confirmAlert} from 'react-confirm-alert';
+import {io, Socket} from "socket.io-client";
+import {connect} from 'react-redux';
+import {DefaultEventsMap} from "socket.io-client/build/typed-events";
 import Game from "./components/Game";
 import SocketContext from "./contexts/SocketContext";
-import { resetState, updateState } from './reducers/Actions';
-import { Player, State } from './reducers/rootReducer';
-import { v4 as uuidv4 } from 'uuid';
+import {resetState, updateState} from './reducers/Actions';
+import {Player, State} from './reducers/rootReducer';
+import {v4 as uuidv4} from 'uuid';
 
 class App extends Component<AppProps, { loggedIn: boolean, name: string, isInGame: boolean, gameId: string, socket?: Socket<DefaultEventsMap, DefaultEventsMap> }> {
   state = {
@@ -28,10 +28,10 @@ class App extends Component<AppProps, { loggedIn: boolean, name: string, isInGam
 
   handleLoginClick = async (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    if (this.state.name === '') return toast.error(<h3 className="popup">Pseudo Invalide!</h3>);
+    if (this.state.name === '' || this.state.name.includes(' ')) return toast.error(<h3 className="popup">Pseudo Invalid!</h3>);
     const isTaken = await this.usernameTaken();
     if (isTaken) return toast.error(<h3 className="popup">Pseudo déjà pris!</h3>);
-    this.state.socket = io('wss://monoponline.herokuapp.com', {
+    this.state.socket = io('ws://localhost:8080', {
       query: {
         username: this.state.name
       },
@@ -139,6 +139,14 @@ class App extends Component<AppProps, { loggedIn: boolean, name: string, isInGam
     });
     this.state.socket.on('player-broke', (player: string) => {
       toast.error(<h3 className="popup">{player === this.state.name ? 'Vous êtes' : `${player} est`} ruiné!</h3>);
+      if (player === this.state.name) {
+        toast.error(<h3 className="popup">Vous avez perdu!</h3>);
+        this.setState({
+          isInGame: false,
+          gameId: ""
+        });
+        this.props.resetState();
+      }
     });
     this.state.socket.on('exit-jail', (player: string) => {
       toast.success(<h3 className="popup">{player === this.state.name ? 'Vous sortez' : `${player} sort`} de prison!</h3>);
@@ -206,9 +214,8 @@ class App extends Component<AppProps, { loggedIn: boolean, name: string, isInGam
   }
 
   usernameTaken = async () => {
-    const res = await fetch(`https://monoponline.herokuapp.com/is-username-taken?username=${this.state.name}`);
-    const isTaken = await res.json() as boolean;
-    return isTaken;
+    const res = await fetch(`http://localhost:8080/is-username-taken?username=${this.state.name}`);
+    return await res.json() as boolean;
   }
 
   handleJoinGameClick = (e: MouseEvent<HTMLButtonElement>) => {

@@ -8,7 +8,7 @@ const FreeParking: FC<Cell> = (props) => {
       <div className="container">
         <div className="name">Parc</div>
         <RenderPlayers cell={props.cell} />
-        <i className="drawing fa fa-car"></i>
+        <i className="drawing fa fa-car"/>
         <div className="name">Gratuit</div>
       </div>
     </div>

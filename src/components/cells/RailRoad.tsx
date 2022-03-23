@@ -8,7 +8,7 @@ const RailRoad: FC<RailRoadProps> = (props) => {
       <div className="container">
         <div className="name">{props.name}</div>
         <RenderPlayers cell={props.cell} />
-        <i className="drawing fa fa-subway"></i>
+        <i className="drawing fa fa-subway"/>
         <div className="price">200€</div>
       </div>
     </div>

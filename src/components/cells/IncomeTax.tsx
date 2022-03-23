@@ -8,7 +8,7 @@ const IncomeTax: FC<Cell> = (props) => {
       <div className="container">
         <div className="name">Impôts sur le revenu</div>
         <RenderPlayers cell={props.cell} />
-        <div className="diamond"></div>
+        <div className="diamond"/>
         <div className="instructions">200€</div>
       </div>
     </div>

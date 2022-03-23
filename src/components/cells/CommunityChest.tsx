@@ -8,7 +8,7 @@ const CommunityChest: FC<Cell> = (props) => {
       <div className="container">
         <div className="name">Caisse de communauté</div>
         <RenderPlayers cell={props.cell} />
-        <i className="drawing fa fa-cube"></i>
+        <i className="drawing fa fa-cube"/>
       </div>
     </div>
   );

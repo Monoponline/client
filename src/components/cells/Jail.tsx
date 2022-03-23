@@ -11,10 +11,10 @@ const Jail: FC<Cell> = (props) => {
         <div className="container">
           <div className="name">En</div>
           <div className="window">
-            <div className="bar"></div>
-            <div className="bar"></div>
-            <div className="bar"></div>
-            <i className="person fa fa-frown-o"></i>
+            <div className="bar"/>
+            <div className="bar"/>
+            <div className="bar"/>
+            <i className="person fa fa-frown-o"/>
           </div>
           <div className="name">Prison</div>
         </div>

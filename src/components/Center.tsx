@@ -19,7 +19,7 @@ const Center: FC<CenterProps> = (props) => {
 
   return (
     <div className="center">
-      {props.isPlayerTurn ? (        
+      {props.isPlayerTurn ? (
         <>
           <div style={{ display: 'flex', position: 'fixed', marginBottom: '55rem', marginLeft: '27rem' }}>
             <h3 style={{ fontSize: '3rem' }}>C'est votre tour!</h3>
@@ -92,8 +92,8 @@ const Center: FC<CenterProps> = (props) => {
                               onClick: () => {
                                 socket.emit('trade-request', JSON.stringify({
                                   player: player.name,
-                                  moneyToReceive: moneyToReceive?.current ?? 0,
-                                  moneyToGive: moneyToGive?.current ?? 0,
+                                  moneyToReceive: moneyToReceive?.current || 0,
+                                  moneyToGive: moneyToGive?.current || 0,
                                   cardToGive: values1.current,
                                   cardToReceive: values2.current
                                 }));

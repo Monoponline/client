@@ -8,7 +8,7 @@ const ElectricCompany: FC<Cell> = (props) => {
       <div className="container">
         <div className="name">Compagnie de distribution d'électricité</div>
         <RenderPlayers cell={props.cell} />
-        <i className="drawing fa fa-lightbulb-o"></i>
+        <i className="drawing fa fa-lightbulb-o"/>
         <div className="price">150€</div>
       </div>
     </div>

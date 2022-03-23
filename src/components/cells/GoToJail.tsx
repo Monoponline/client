@@ -8,7 +8,7 @@ const GoToJail: FC<Cell> = (props) => {
       <div className="container">
         <div className="name">ALLEZ EN</div>
         <RenderPlayers cell={props.cell} />
-        <i className="drawing fa fa-gavel"></i>
+        <i className="drawing fa fa-gavel"/>
         <div className="name">PRISON</div>
       </div>
     </div>

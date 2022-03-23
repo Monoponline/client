@@ -8,7 +8,7 @@ const Chance: FC<ChanceProps> = (props) => {
       <div className="container">
         <div className="name">Chance</div>
         <RenderPlayers cell={props.cell} />
-        <i className={`drawing fa fa-question${props.blue ? ' blue' : ''}`}></i>
+        <i className={`drawing fa fa-question${props.blue ? ' blue' : ''}`}/>
       </div>
     </div>
   );

@@ -7,7 +7,7 @@ const Property: FC<PropertyProps> = (props) => {
   return (
     <div className={`space property cell_${props.cell}`}>
       <div className="container">
-        <div className={`color-bar ${props.color}`}></div>
+        <div className={`color-bar ${props.color}`}/>
         <div className={`name${props.three ? ' three-line-name' : ''}`}>{props.name}</div>
         <RenderPlayers cell={props.cell} />
         <RenderHouses cell={props.cell} />

@@ -8,7 +8,7 @@ const Waterworks: FC<Cell> = (props) => {
       <div className="container">
         <div className="name">Compagnie de distribution des eaux</div>
         <RenderPlayers cell={props.cell} />
-        <i className="drawing fa fa-tint"></i>
+        <i className="drawing fa fa-tint"/>
         <div className="price">150€</div>
       </div>
     </div>
